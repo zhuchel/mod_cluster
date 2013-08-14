@@ -1143,10 +1143,18 @@ static char * process_appl_cmd(request_rec *r, char **ptr, int status, int *errt
         i++;
     }
 
-    /* Check for JVMRoute */
+    /* Check for JVMRoute, Alias and Context */
     if (nodeinfo.mess.JVMRoute[0] == '\0') {
         *errtype = TYPESYNTAX;
         return SROUBAD;
+    }
+    if (vhost->context == NULL) {
+        *errtype = TYPESYNTAX;
+        return SALIBAD;
+    }
+    if (vhost->host == NULL) {
+        *errtype = TYPESYNTAX;
+        return SCONBAD;
     }
 
     /* Read the node */
